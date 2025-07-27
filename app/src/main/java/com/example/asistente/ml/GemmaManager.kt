@@ -97,7 +97,7 @@ class GemmaManager(private val context: Context) {
             
             Log.d(TAG, "Procesando texto de audio con Gemma 3n...")
             
-            // Usar generateResponse para obtener respuesta síncrona
+            // Usar generateResponse para obtener respuesta sincrona
             val result = inference.generateResponse(prompt)
             
             // Actualizar el resultado y estado

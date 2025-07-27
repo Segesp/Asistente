@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         
-        <!-- Servicio para grabación continua en segundo plano -->
+        <!-- Servicio para grabacion continua en segundo plano -->
         <service
             android:name=".services.AudioRecordingService"
             android:enabled="true"

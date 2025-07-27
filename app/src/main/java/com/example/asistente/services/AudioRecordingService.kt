@@ -16,8 +16,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Servicio en primer plano para grabación continua de audio
- * Procesa el audio con Gemma 3n y mantiene un documento actualizado
+ * Servicio en primer plano para grabacion continua de audio
+ * Permite grabar audio incluso cuando la app esta en segundo plano
  */
 class AudioRecordingService : Service() {
     
@@ -88,41 +88,41 @@ class AudioRecordingService : Service() {
     
     private fun startRecordingProcess() {
         if (isServiceRunning) {
-            Log.w(TAG, "El servicio ya está grabando")
+            Log.w(TAG, "El servicio ya esta grabando")
             return
         }
         
-        Log.i(TAG, "Iniciando grabación continua")
+        Log.i(TAG, "Iniciando grabacion continua")
         isServiceRunning = true
         
-        // Crear notificación persistente
-        val notification = createNotification("Grabación activa", "El asistente está escuchando...")
+        // Crear notificacion persistente
+        val notification = createNotification("Grabacion activa", "El asistente esta escuchando...")
         startForeground(NOTIFICATION_ID, notification)
         
-        // Iniciar grabación de audio
+        // Iniciar grabacion de audio
         audioManager.startRecording { audioChunk ->
             processAudioChunk(audioChunk)
         }
         
         // Agregar timestamp inicial al documento
         val timestamp = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(Date())
-        transcriptBuilder.append("=== Sesión iniciada: $timestamp ===\n\n")
+        transcriptBuilder.append("=== Sesion iniciada: $timestamp ===\n\n")
     }
     
     private fun stopRecordingProcess() {
         if (!isServiceRunning) {
-            Log.w(TAG, "El servicio no está grabando")
+            Log.w(TAG, "El servicio no esta grabando")
             return
         }
         
-        Log.i(TAG, "Deteniendo grabación continua")
+        Log.i(TAG, "Deteniendo grabacion continua")
         isServiceRunning = false
         
         audioManager.stopRecording()
         
         // Agregar timestamp final y guardar documento
         val timestamp = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(Date())
-        transcriptBuilder.append("\n=== Sesión finalizada: $timestamp ===")
+        transcriptBuilder.append("\n=== Sesion finalizada: $timestamp ===")
         
         saveTranscriptToFile()
         
@@ -133,8 +133,8 @@ class AudioRecordingService : Service() {
     private fun processAudioChunk(audioData: FloatArray) {
         serviceScope.launch {
             try {
-                // Por ahora simulamos la transcripción ya que el soporte de audio
-                // directo en Gemma 3n no está disponible en el SDK público
+                // Por ahora simulamos la transcripcion ya que el soporte de audio
+                // directo en Gemma 3n no esta disponible en el SDK publico
                 val simulatedText = audioManager.simulateTranscription(audioData)
                 
                 if (simulatedText.isNotBlank() && !simulatedText.contains("Silencio")) {
@@ -147,8 +147,8 @@ class AudioRecordingService : Service() {
                     val timestamp = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
                     transcriptBuilder.append("[$timestamp] $processedText\n")
                     
-                    // Actualizar notificación
-                    updateNotification("Grabación activa", "Último: $simulatedText")
+                    // Actualizar notificacion
+                    updateNotification("Grabacion activa", "Ultimo: $simulatedText")
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Error al procesar audio", e)
@@ -163,7 +163,7 @@ class AudioRecordingService : Service() {
             val file = java.io.File(filesDir, fileName)
             
             file.writeText(transcriptBuilder.toString())
-            Log.i(TAG, "Transcripción guardada en: ${file.absolutePath}")
+            Log.i(TAG, "Transcripcion guardada en: ${file.absolutePath}")
             
             // Generar resumen con Gemma 3n
             serviceScope.launch {
@@ -178,7 +178,7 @@ class AudioRecordingService : Service() {
             }
             
         } catch (e: Exception) {
-            Log.e(TAG, "Error al guardar transcripción", e)
+            Log.e(TAG, "Error al guardar transcripcion", e)
         }
     }
     
@@ -186,10 +186,10 @@ class AudioRecordingService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Grabación de Audio",
+                "Grabacion de Audio",
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Notificaciones para el servicio de grabación continua"
+                description = "Notificaciones para el servicio de grabacion continua"
                 setSound(null, null)
             }
             

@@ -19,11 +19,8 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 /**
- * Manager para la grabación y procesamiento de audio
- * Optimizado para trabajar con los requisitos de Gemma 3n:
- * - Un solo canal
- * - 16 kHz de frecuencia de muestreo
- * - 32 bits en punto flotante
+ * Manager para la grabacion y procesamiento de audio
+ * Optimizado para trabajar con Gemma 3n segun las especificaciones oficiales
  */
 class AudioManager(private val context: Context) {
     
@@ -43,12 +40,12 @@ class AudioManager(private val context: Context) {
     companion object {
         private const val TAG = "AudioManager"
         
-        // Configuración según especificaciones de Gemma 3n
+        // Configuracion segun especificaciones de Gemma 3n
         private const val SAMPLE_RATE = 16000 // 16 kHz
         private const val CHANNEL_CONFIG = AudioFormat.CHANNEL_IN_MONO // Un solo canal
         private const val AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT
         
-        // Configuración de buffer
+        // Configuracion de buffer
         private const val BUFFER_SIZE_MULTIPLIER = 2
         private const val CHUNK_DURATION_MS = 3000 // 3 segundos por chunk
         private const val CHUNK_SIZE = SAMPLE_RATE * CHUNK_DURATION_MS / 1000
@@ -81,7 +78,7 @@ class AudioManager(private val context: Context) {
             ) * BUFFER_SIZE_MULTIPLIER
             
             if (bufferSize == AudioRecord.ERROR || bufferSize == AudioRecord.ERROR_BAD_VALUE) {
-                Log.e(TAG, "Error al obtener el tamaño del buffer")
+                Log.e(TAG, "Error al obtener el tamano del buffer")
                 return false
             }
             
@@ -107,7 +104,7 @@ class AudioManager(private val context: Context) {
     }
     
     /**
-     * Inicia la grabación continua
+     * Inicia la grabacion continua
      */
     fun startRecording(onAudioChunk: (FloatArray) -> Unit) {
         if (!hasAudioPermission()) {
@@ -116,7 +113,7 @@ class AudioManager(private val context: Context) {
         }
         
         if (isRecordingActive) {
-            Log.w(TAG, "La grabación ya está activa")
+            Log.w(TAG, "La grabacion ya esta activa")
             return
         }
         
@@ -131,7 +128,7 @@ class AudioManager(private val context: Context) {
         recordingJob = CoroutineScope(Dispatchers.IO).launch {
             try {
                 audioRecord?.startRecording()
-                Log.d(TAG, "Grabación iniciada")
+                Log.d(TAG, "Grabacion iniciada")
                 
                 val audioBuffer = ShortArray(CHUNK_SIZE)
                 val floatBuffer = FloatArray(CHUNK_SIZE)
@@ -165,21 +162,21 @@ class AudioManager(private val context: Context) {
                             onAudioChunk(floatBuffer.copyOf(bytesRead))
                         }
                         
-                        // Pequeña pausa para no saturar el CPU
+                        // Pequena pausa para no saturar el CPU
                         delay(100)
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Error durante la grabación", e)
+                Log.e(TAG, "Error durante la grabacion", e)
             } finally {
                 audioRecord?.stop()
-                Log.d(TAG, "Grabación detenida")
+                Log.d(TAG, "Grabacion detenida")
             }
         }
     }
     
     /**
-     * Detiene la grabación
+     * Detiene la grabacion
      */
     fun stopRecording() {
         isRecordingActive = false
@@ -197,12 +194,12 @@ class AudioManager(private val context: Context) {
         audioRecord = null
         
         _audioLevel.value = 0f
-        Log.d(TAG, "Grabación detenida y recursos liberados")
+        Log.d(TAG, "Grabacion detenida y recursos liberados")
     }
     
     /**
      * Convierte audio a formato compatible con Gemma 3n
-     * Según la documentación: 32 bits float, 16kHz, mono
+     * Segun la documentacion: 32 bits float, 16kHz, mono
      */
     fun convertToGemmaFormat(audioData: FloatArray): ByteArray {
         val byteBuffer = ByteBuffer.allocate(audioData.size * 4) // 4 bytes por float
@@ -241,7 +238,7 @@ class AudioManager(private val context: Context) {
     }
     
     /**
-     * Crea header WAV básico
+     * Crea header WAV basico
      */
     private fun createWavHeader(audioDataSize: Int): ByteArray {
         val header = ByteArray(44)
@@ -271,12 +268,12 @@ class AudioManager(private val context: Context) {
     }
     
     /**
-     * Simula transcripción de audio a texto
-     * En una implementación real, aquí iría el procesamiento con Gemma 3n
-     * cuando el soporte de audio esté disponible en el SDK
+     * Simula transcripcion de audio a texto
+     * En una implementacion real, aqui iria el procesamiento con Gemma 3n
+     * cuando el soporte de audio este disponible en el SDK
      */
     fun simulateTranscription(audioData: FloatArray): String {
-        // Por ahora simulamos la transcripción
+        // Por ahora simulamos la transcripcion
         val avgAmplitude = audioData.map { kotlin.math.abs(it) }.average()
         return when {
             avgAmplitude > 0.1 -> "Audio detectado con alta intensidad"

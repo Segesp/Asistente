@@ -144,7 +144,7 @@ fun MainScreen(viewModel: MainViewModel) {
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        // Transcripción en vivo
+        // Transcripcion en vivo
         if (uiState.currentTranscript.isNotBlank()) {
             TranscriptionCard(
                 transcript = uiState.currentTranscript,
@@ -159,7 +159,7 @@ fun MainScreen(viewModel: MainViewModel) {
         SavedFilesCard(
             files = uiState.savedFiles,
             onFileClick = { file -> 
-                // Aquí podrías abrir un diálogo para mostrar el contenido
+                // Aqui podrias abrir un dialogo para mostrar el contenido
             },
             onDeleteFile = { file -> viewModel.deleteFile(file) }
         )
@@ -231,7 +231,7 @@ fun SystemStatusCard(uiState: MainUiState) {
             )
             
             StatusRow(
-                label = "Grabación Activa",
+                label = "Grabacion Activa",
                 isActive = uiState.isRecording,
                 icon = if (uiState.isRecording) Icons.Default.RadioButtonChecked else Icons.Default.Stop
             )
@@ -322,7 +322,7 @@ fun ControlsCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                // Botón de inicializar modelo
+                // Boton de inicializar modelo
                 ElevatedButton(
                     onClick = onInitializeModel,
                     enabled = uiState.hasAudioPermission && !uiState.isRecording,
@@ -338,7 +338,7 @@ fun ControlsCard(
                 
                 Spacer(modifier = Modifier.width(8.dp))
                 
-                // Botón de grabación
+                // Boton de grabacion
                 if (!uiState.isRecording) {
                     Button(
                         onClick = onStartRecording,
@@ -349,7 +349,7 @@ fun ControlsCard(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(Icons.Default.PlayArrow, contentDescription = null)
-                            Text("Iniciar\nGrabación", textAlign = TextAlign.Center)
+                            Text("Iniciar\nGrabacion", textAlign = TextAlign.Center)
                         }
                     }
                 } else {
@@ -364,7 +364,7 @@ fun ControlsCard(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(Icons.Default.Stop, contentDescription = null)
-                            Text("Detener\nGrabación", textAlign = TextAlign.Center)
+                            Text("Detener\nGrabacion", textAlign = TextAlign.Center)
                         }
                     }
                 }
@@ -390,7 +390,7 @@ fun TranscriptionCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Transcripción en Vivo",
+                    text = "Transcripcion en Vivo",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.weight(1f)
@@ -420,7 +420,7 @@ fun TranscriptionCard(
                 ) {
                     item {
                         Text(
-                            text = transcript.ifBlank { "Esperando transcripción..." },
+                            text = transcript.ifBlank { "Esperando transcripcion..." },
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }

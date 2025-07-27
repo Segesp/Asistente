@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * ViewModel principal para la aplicación del asistente
+ * ViewModel principal para la aplicacion del asistente
  */
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     
@@ -93,7 +93,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Error durante la inicialización", e)
+                Log.e(TAG, "Error durante la inicializacion", e)
                 _uiState.value = _uiState.value.copy(
                     errorMessage = "Error inesperado: ${e.message}"
                 )
@@ -102,7 +102,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
     
     /**
-     * Inicia la grabación continua usando el servicio
+     * Inicia la grabacion continua usando el servicio
      */
     fun startRecording() {
         if (!audioManager.hasAudioPermission()) {
@@ -114,34 +114,34 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         
         if (!_uiState.value.isModelLoaded) {
             _uiState.value = _uiState.value.copy(
-                errorMessage = "El modelo debe estar cargado antes de iniciar la grabación"
+                errorMessage = "El modelo debe estar cargado antes de iniciar la grabacion"
             )
             return
         }
         
         try {
             AudioRecordingService.startRecording(context)
-            Log.i(TAG, "Servicio de grabación iniciado")
+            Log.i(TAG, "Servicio de grabacion iniciado")
         } catch (e: Exception) {
-            Log.e(TAG, "Error al iniciar grabación", e)
+            Log.e(TAG, "Error al iniciar grabacion", e)
             _uiState.value = _uiState.value.copy(
-                errorMessage = "Error al iniciar grabación: ${e.message}"
+                errorMessage = "Error al iniciar grabacion: ${e.message}"
             )
         }
     }
     
     /**
-     * Detiene la grabación continua
+     * Detiene la grabacion continua
      */
     fun stopRecording() {
         try {
             AudioRecordingService.stopRecording(context)
-            Log.i(TAG, "Servicio de grabación detenido")
+            Log.i(TAG, "Servicio de grabacion detenido")
             loadSavedFiles() // Recargar archivos guardados
         } catch (e: Exception) {
-            Log.e(TAG, "Error al detener grabación", e)
+            Log.e(TAG, "Error al detener grabacion", e)
             _uiState.value = _uiState.value.copy(
-                errorMessage = "Error al detener grabación: ${e.message}"
+                errorMessage = "Error al detener grabacion: ${e.message}"
             )
         }
     }
@@ -266,7 +266,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
     
     /**
-     * Obtiene estadísticas de uso
+     * Obtiene estadisticas de uso
      */
     fun getUsageStats(): String {
         val files = _uiState.value.savedFiles
@@ -276,12 +276,12 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val summaries = files.filter { it.name.startsWith("summary_") }.size
         
         return """
-            Estadísticas de uso:
+            Estadisticas de uso:
             • Total de archivos: $totalFiles
             • Transcripciones: $transcripts
-            • Resúmenes: $summaries
+            • Resumenes: $summaries
             • Espacio total: ${totalSize / 1024} KB
-            • Modelo cargado: ${if (_uiState.value.isModelLoaded) "Sí" else "No"}
+            • Modelo cargado: ${if (_uiState.value.isModelLoaded) "Si" else "No"}
         """.trimIndent()
     }
     
