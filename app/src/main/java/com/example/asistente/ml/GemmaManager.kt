@@ -12,7 +12,7 @@ import java.io.File
 
 /**
  * Manager para manejar la inferencia con Gemma 3n
- * Basado en la documentación oficial de Google AI Edge y MediaPipe
+ * Basado en la documentacion oficial de Google AI Edge y MediaPipe
  */
 class GemmaManager(private val context: Context) {
     
@@ -30,7 +30,7 @@ class GemmaManager(private val context: Context) {
         private const val TAG = "GemmaManager"
         private const val MODEL_FILE_NAME = "gemma-3n-E4B-it.task"
         
-        // Configuración del modelo según la documentación
+        // Configuracion del modelo segun la documentacion
         private const val MAX_TOKENS = 512
     }
     
@@ -52,7 +52,7 @@ class GemmaManager(private val context: Context) {
             val options = LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(modelFile.absolutePath)
                 .setMaxTokens(MAX_TOKENS)
-                // Usar GPU si está disponible para mejor rendimiento
+                // Usar GPU si esta disponible para mejor rendimiento
                 .setPreferredBackend(LlmInference.Backend.GPU)
                 .build()
             
@@ -69,9 +69,9 @@ class GemmaManager(private val context: Context) {
     }
     
     /**
-     * Procesa texto de audio para transcripción y organización
-     * Nota: Según la documentación, el soporte de audio directo aún no está
-     * disponible en el SDK público, por lo que trabajamos con texto procesado
+     * Procesa texto de audio para transcripcion y organizacion
+     * Nota: Segun la documentacion, el soporte de audio directo aun no esta
+     * disponible en el SDK publico, por lo que trabajamos con texto procesado
      */
     suspend fun processAudioText(audioText: String): String = withContext(Dispatchers.IO) {
         return@withContext try {
@@ -87,10 +87,10 @@ class GemmaManager(private val context: Context) {
             Texto transcrito: "$audioText"
             
             Por favor:
-            1. Corrige errores de transcripción obvios
-            2. Organiza el texto en párrafos coherentes
+            1. Corrige errores de transcripcion obvios
+            2. Organiza el texto en parrafos coherentes
             3. Identifica temas principales
-            4. Mantén el significado original
+            4. Manten el significado original
             
             Texto organizado:
             """.trimIndent()
@@ -104,7 +104,7 @@ class GemmaManager(private val context: Context) {
             _transcriptionResult.value = result
             _isProcessing.value = false
             
-            Log.d(TAG, "Transcripción completada")
+            Log.d(TAG, "Transcripcion completada")
             result
             
         } catch (e: Exception) {
@@ -159,12 +159,12 @@ class GemmaManager(private val context: Context) {
     }
     
     /**
-     * Obtiene información del modelo
+     * Obtiene informacion del modelo
      */
     fun getModelInfo(): String {
         val modelFile = File(context.filesDir, MODEL_FILE_NAME)
         return if (modelFile.exists()) {
-            "Modelo: Gemma 3n E4B\nTamaño: ${modelFile.length() / (1024 * 1024)} MB\nUbicación: ${modelFile.absolutePath}"
+            "Modelo: Gemma 3n E4B\nTamano: ${modelFile.length() / (1024 * 1024)} MB\nUbicacion: ${modelFile.absolutePath}"
         } else {
             "Modelo no encontrado"
         }
