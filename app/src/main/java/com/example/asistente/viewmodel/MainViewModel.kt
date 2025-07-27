@@ -14,18 +14,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-data class MainUiState(
-    val isModelLoaded: Boolean = false,
-    val isRecording: Boolean = false,
-    val audioLevel: Float = 0f,
-    val currentTranscript: String = "",
-    val isProcessing: Boolean = false,
-    val modelInfo: String = "",
-    val savedFiles: List<File> = emptyList(),
-    val hasAudioPermission: Boolean = false,
-    val errorMessage: String? = null
-)
-
 /**
  * ViewModel principal para la aplicación del asistente
  */
@@ -35,8 +23,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val gemmaManager = GemmaManager(context)
     private val audioManager = AudioManager(context)
     
-    private val _uiState = MutableStateFlow(MainUiState())
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(com.example.asistente.MainUiState())
+    val uiState: StateFlow<com.example.asistente.MainUiState> = _uiState.asStateFlow()
     
     companion object {
         private const val TAG = "MainViewModel"

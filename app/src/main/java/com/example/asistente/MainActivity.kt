@@ -7,17 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activit                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(Icons.Default.SmartToy, contentDescription = null)
-                            Text("Cargar\nModelo", textAlign = TextAlign.Center)
-                        }Models
-import androidx.compose.animation.*
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -25,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,8 +25,19 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.asistente.ui.theme.AsistenteTheme
 import com.example.asistente.viewmodel.MainViewModel
-import com.example.asistente.viewmodel.MainUiState
 import java.io.File
+
+data class MainUiState(
+    val isModelLoaded: Boolean = false,
+    val isRecording: Boolean = false,
+    val audioLevel: Float = 0f,
+    val currentTranscript: String = "",
+    val isProcessing: Boolean = false,
+    val modelInfo: String = "",
+    val savedFiles: List<File> = emptyList(),
+    val hasAudioPermission: Boolean = false,
+    val errorMessage: String? = null
+)
 
 class MainActivity : ComponentActivity() {
     
@@ -328,7 +331,7 @@ fun ControlsCard(
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Icon(Icons.Default.Psychology, contentDescription = null)
+                        Icon(Icons.Default.SmartToy, contentDescription = null)
                         Text("Cargar\nModelo", textAlign = TextAlign.Center)
                     }
                 }
@@ -465,7 +468,7 @@ fun SavedFilesCard(
                             onDelete = { onDeleteFile(file) }
                         )
                         if (file != files.last()) {
-                            Divider()
+                            HorizontalDivider()
                         }
                     }
                 }
