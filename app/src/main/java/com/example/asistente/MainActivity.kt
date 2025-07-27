@@ -7,7 +7,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
+import androidx.activit                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(Icons.Default.SmartToy, contentDescription = null)
+                            Text("Cargar\nModelo", textAlign = TextAlign.Center)
+                        }Models
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,6 +33,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.asistente.ui.theme.AsistenteTheme
 import com.example.asistente.viewmodel.MainViewModel
+import com.example.asistente.viewmodel.MainUiState
 import java.io.File
 
 class MainActivity : ComponentActivity() {
@@ -212,19 +218,19 @@ fun SystemStatusCard(uiState: MainUiState) {
             StatusRow(
                 label = "Permisos de Audio",
                 isActive = uiState.hasAudioPermission,
-                icon = if (uiState.hasAudioPermission) Icons.Default.Mic else Icons.Default.MicOff
+                icon = if (uiState.hasAudioPermission) Icons.Default.VolumeUp else Icons.Default.VolumeOff
             )
             
             StatusRow(
                 label = "Modelo Gemma 3n",
                 isActive = uiState.isModelLoaded,
-                icon = if (uiState.isModelLoaded) Icons.Default.Psychology else Icons.Default.CloudOff
+                icon = if (uiState.isModelLoaded) Icons.Default.SmartToy else Icons.Default.CloudOff
             )
             
             StatusRow(
                 label = "Grabación Activa",
                 isActive = uiState.isRecording,
-                icon = if (uiState.isRecording) Icons.Default.FiberManualRecord else Icons.Default.Stop
+                icon = if (uiState.isRecording) Icons.Default.RadioButtonChecked else Icons.Default.Stop
             )
             
             // Nivel de audio visual
@@ -278,7 +284,7 @@ fun StatusRow(
             modifier = Modifier.weight(1f)
         )
         Icon(
-            imageVector = if (isActive) Icons.Default.CheckCircle else Icons.Default.Cancel,
+            imageVector = if (isActive) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
             contentDescription = null,
             tint = if (isActive) Color.Green else Color.Gray,
             modifier = Modifier.size(16.dp)
@@ -392,7 +398,7 @@ fun TranscriptionCard(
                 }
                 
                 IconButton(onClick = onGenerateSummary) {
-                    Icon(Icons.Default.Summarize, contentDescription = "Generar resumen")
+                    Icon(Icons.Default.Assignment, contentDescription = "Generar resumen")
                 }
             }
             
@@ -483,8 +489,8 @@ fun FileItem(
         Icon(
             imageVector = when {
                 file.name.startsWith("transcript_") -> Icons.Default.Description
-                file.name.startsWith("summary_") -> Icons.Default.Summarize
-                else -> Icons.Default.TextSnippet
+                file.name.startsWith("summary_") -> Icons.Default.Assignment
+                else -> Icons.Default.InsertDriveFile
             },
             contentDescription = null,
             modifier = Modifier.size(20.dp)

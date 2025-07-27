@@ -55,13 +55,12 @@ class GemmaManager(private val context: Context) {
             val options = LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(modelFile.absolutePath)
                 .setMaxTokens(MAX_TOKENS)
-                .setTemperature(TEMPERATURE)
                 .setTopK(TOP_K)
                 .setRandomSeed(RANDOM_SEED)
                 // Usar GPU si está disponible para mejor rendimiento
                 .setPreferredBackend(LlmInference.Backend.GPU)
                 // Configurar el listener para streaming de respuestas
-                .setResultListener { partialResult, done ->
+                .setResultListener { partialResult: String, done: Boolean ->
                     Log.d(TAG, "Resultado parcial: $partialResult")
                     _transcriptionResult.value = partialResult
                     if (done) {

@@ -57,6 +57,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
     
+    // Iconos Material adicionales
+    implementation("androidx.compose.material:material-icons-extended:1.7.5")
+    
     // Permisos y grabación de audio
     implementation("androidx.activity:activity-compose:1.9.3")
     
