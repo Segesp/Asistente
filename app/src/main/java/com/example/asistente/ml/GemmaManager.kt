@@ -32,8 +32,6 @@ class GemmaManager(private val context: Context) {
         
         // Configuración del modelo según la documentación
         private const val MAX_TOKENS = 512
-        private const val TEMPERATURE = 0.8f
-        private const val RANDOM_SEED = 0
     }
     
     /**
@@ -54,7 +52,6 @@ class GemmaManager(private val context: Context) {
             val options = LlmInference.LlmInferenceOptions.builder()
                 .setModelPath(modelFile.absolutePath)
                 .setMaxTokens(MAX_TOKENS)
-                .setRandomSeed(RANDOM_SEED)
                 // Usar GPU si está disponible para mejor rendimiento
                 .setPreferredBackend(LlmInference.Backend.GPU)
                 // Configurar el listener para streaming de respuestas
