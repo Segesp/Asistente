@@ -49,6 +49,23 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    
+    // MediaPipe para Gemma 3n
+    implementation("com.google.mediapipe:tasks-genai:0.10.24")
+    
+    // ViewModel y Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
+    
+    // Permisos y grabación de audio
+    implementation("androidx.activity:activity-compose:1.9.3")
+    
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    
+    // Manejo de archivos
+    implementation("androidx.documentfile:documentfile:1.0.1")
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
