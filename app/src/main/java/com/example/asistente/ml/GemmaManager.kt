@@ -54,15 +54,6 @@ class GemmaManager(private val context: Context) {
                 .setMaxTokens(MAX_TOKENS)
                 // Usar GPU si está disponible para mejor rendimiento
                 .setPreferredBackend(LlmInference.Backend.GPU)
-                // Configurar el listener para streaming de respuestas
-                .setResultListener { partialResult: String, done: Boolean ->
-                    Log.d(TAG, "Resultado parcial: $partialResult")
-                    _transcriptionResult.value = partialResult
-                    if (done) {
-                        _isProcessing.value = false
-                        Log.d(TAG, "Transcripción completada")
-                    }
-                }
                 .build()
             
             llmInference = LlmInference.createFromOptions(context, options)
@@ -106,11 +97,15 @@ class GemmaManager(private val context: Context) {
             
             Log.d(TAG, "Procesando texto de audio con Gemma 3n...")
             
-            // Usar generateResponseAsync para streaming
-            inference.generateResponseAsync(prompt)
+            // Usar generateResponse para obtener respuesta síncrona
+            val result = inference.generateResponse(prompt)
             
-            // El resultado se maneja en el listener configurado durante la inicialización
-            "Procesando..."
+            // Actualizar el resultado y estado
+            _transcriptionResult.value = result
+            _isProcessing.value = false
+            
+            Log.d(TAG, "Transcripción completada")
+            result
             
         } catch (e: Exception) {
             Log.e(TAG, "Error al procesar texto de audio", e)
