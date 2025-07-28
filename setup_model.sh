@@ -107,9 +107,9 @@ cd ../../
 rm -rf "$TEMP_DIR"
 
 echo ""
-echo "🎉 ¡Configuración completada!"
+echo "🎉 Configuracion completada!"
 echo ""
-echo "Próximos pasos:"
+echo "Proximos pasos:"
 echo "1. Si no lo has hecho, compila e instala la aplicación:"
 echo "   ./gradlew installDebug"
 echo ""

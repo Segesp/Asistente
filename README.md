@@ -1,21 +1,21 @@
 # Asistente IA Local con Gemma 3n
 
-Una aplicación Android que funciona como un asistente de voz inteligente, capaz de escuchar continuamente el micrófono, transcribir el audio usando IA local y organizar la información en documentos estructurados.
+Una aplicacion Android que funciona como un asistente de voz inteligente, capaz de escuchar continuamente el microfono, transcribir el audio usando IA local y organizar la informacion en documentos estructurados.
 
 ## Características Principales
 
-### 🎤 Grabación Continua
-- Escucha continua del micrófono en segundo plano
-- Detección automática de silencio
-- Optimizado para batería con grabación inteligente
+### 🎤 Grabacion Continua
+- Escucha continua del microfono en segundo plano
+- Deteccion automatica de silencio
+- Optimizado para bateria con grabacion inteligente
 
 ### 🧠 IA Local con Gemma 3n
-- Modelo Gemma 3n E4B ejecutándose completamente en el dispositivo
+- Modelo Gemma 3n E4B ejecutandose completamente en el dispositivo
 - Sin dependencia de internet para procesamiento
 - Privacidad total - los datos nunca salen del dispositivo
 
-### 📝 Transcripción y Organización
-- Transcripción automática del audio (simulada por limitaciones del SDK)
+### 📝 Transcripcion y Organizacion
+- Transcripcion automatica del audio (simulada por limitaciones del SDK)
 - Organización inteligente del texto usando Gemma 3n
 - Generación de resúmenes automáticos
 - Almacenamiento local de transcripciones

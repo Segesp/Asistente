@@ -36,7 +36,10 @@ data class MainUiState(
     val modelInfo: String = "",
     val savedFiles: List<File> = emptyList(),
     val hasAudioPermission: Boolean = false,
-    val errorMessage: String? = null
+    val errorMessage: String? = null,
+    val isDownloading: Boolean = false,
+    val downloadProgress: Float = 0f,
+    val downloadStatus: String = ""
 )
 
 class MainActivity : ComponentActivity() {
@@ -221,7 +224,7 @@ fun SystemStatusCard(uiState: MainUiState) {
             StatusRow(
                 label = "Permisos de Audio",
                 isActive = uiState.hasAudioPermission,
-                icon = if (uiState.hasAudioPermission) Icons.Default.VolumeUp else Icons.Default.VolumeOff
+                icon = if (uiState.hasAudioPermission) Icons.AutoMirrored.Filled.VolumeUp else Icons.AutoMirrored.Filled.VolumeOff
             )
             
             StatusRow(
@@ -235,6 +238,47 @@ fun SystemStatusCard(uiState: MainUiState) {
                 isActive = uiState.isRecording,
                 icon = if (uiState.isRecording) Icons.Default.RadioButtonChecked else Icons.Default.Stop
             )
+            
+            // Mostrar progreso de descarga si esta descargando
+            if (uiState.isDownloading) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Download,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Descargando Modelo",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(1f)
+                        )
+                        Text(
+                            text = "${(uiState.downloadProgress * 100).toInt()}%",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    LinearProgressIndicator(
+                        progress = uiState.downloadProgress.coerceIn(0f, 1f),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    if (uiState.downloadStatus.isNotBlank()) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = uiState.downloadStatus,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
             
             // Nivel de audio visual
             if (uiState.isRecording) {
@@ -401,7 +445,7 @@ fun TranscriptionCard(
                 }
                 
                 IconButton(onClick = onGenerateSummary) {
-                    Icon(Icons.Default.Assignment, contentDescription = "Generar resumen")
+                    Icon(Icons.AutoMirrored.Filled.Assignment, contentDescription = "Generar resumen")
                 }
             }
             
@@ -492,8 +536,8 @@ fun FileItem(
         Icon(
             imageVector = when {
                 file.name.startsWith("transcript_") -> Icons.Default.Description
-                file.name.startsWith("summary_") -> Icons.Default.Assignment
-                else -> Icons.Default.InsertDriveFile
+                file.name.startsWith("summary_") -> Icons.AutoMirrored.Filled.Assignment
+                else -> Icons.AutoMirrored.Filled.InsertDriveFile
             },
             contentDescription = null,
             modifier = Modifier.size(20.dp)

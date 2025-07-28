@@ -37,17 +37,23 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     
     private fun observeComponents() {
         viewModelScope.launch {
-            // Observar estado del modelo Gemma
+            // Observar estado del modelo Gemma incluyendo descarga
             combine(
                 gemmaManager.isModelLoaded,
                 gemmaManager.transcriptionResult,
                 gemmaManager.isProcessing,
+                gemmaManager.isDownloading,
+                gemmaManager.downloadProgress,
+                gemmaManager.downloadStatus,
                 audioManager.isRecording,
                 audioManager.audioLevel
-            ) { isModelLoaded, transcription, isProcessing, isRecording, audioLevel ->
+            ) { isModelLoaded, transcription, isProcessing, isDownloading, downloadProgress, downloadStatus, isRecording, audioLevel ->
                 _uiState.value = _uiState.value.copy(
                     isModelLoaded = isModelLoaded,
                     currentTranscript = transcription,
+                    isDownloading = isDownloading,
+                    downloadProgress = downloadProgress,
+                    downloadStatus = downloadStatus,
                     isProcessing = isProcessing,
                     isRecording = isRecording,
                     audioLevel = audioLevel
