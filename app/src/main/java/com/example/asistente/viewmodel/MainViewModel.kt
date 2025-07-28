@@ -47,7 +47,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 gemmaManager.downloadStatus,
                 audioManager.isRecording,
                 audioManager.audioLevel
-            ) { isModelLoaded, transcription, isProcessing, isDownloading, downloadProgress, downloadStatus, isRecording, audioLevel ->
+            ) { values ->
+                val isModelLoaded = values[0] as Boolean
+                val transcription = values[1] as String
+                val isProcessing = values[2] as Boolean
+                val isDownloading = values[3] as Boolean
+                val downloadProgress = values[4] as Float
+                val downloadStatus = values[5] as String
+                val isRecording = values[6] as Boolean
+                val audioLevel = values[7] as Float
+                
                 _uiState.value = _uiState.value.copy(
                     isModelLoaded = isModelLoaded,
                     currentTranscript = transcription,

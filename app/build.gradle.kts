@@ -50,9 +50,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     
-    // MediaPipe para Gemma 3n
-    implementation("com.google.mediapipe:tasks-genai:0.10.24")
-    
     // ViewModel y Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.compose.runtime:runtime-livedata:1.7.5")
