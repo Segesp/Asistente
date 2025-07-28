@@ -224,7 +224,7 @@ fun SystemStatusCard(uiState: MainUiState) {
             StatusRow(
                 label = "Permisos de Audio",
                 isActive = uiState.hasAudioPermission,
-                icon = if (uiState.hasAudioPermission) Icons.AutoMirrored.Filled.VolumeUp else Icons.AutoMirrored.Filled.VolumeOff
+                icon = if (uiState.hasAudioPermission) Icons.Default.VolumeUp else Icons.Default.VolumeOff
             )
             
             StatusRow(
@@ -266,7 +266,7 @@ fun SystemStatusCard(uiState: MainUiState) {
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     LinearProgressIndicator(
-                        progress = uiState.downloadProgress.coerceIn(0f, 1f),
+                        progress = { uiState.downloadProgress.coerceIn(0f, 1f) },
                         modifier = Modifier.fillMaxWidth()
                     )
                     if (uiState.downloadStatus.isNotBlank()) {
@@ -292,7 +292,7 @@ fun SystemStatusCard(uiState: MainUiState) {
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     LinearProgressIndicator(
-                        progress = uiState.audioLevel.coerceIn(0f, 1f),
+                        progress = { uiState.audioLevel.coerceIn(0f, 1f) },
                         modifier = Modifier
                             .weight(1f)
                             .height(8.dp),
@@ -445,7 +445,7 @@ fun TranscriptionCard(
                 }
                 
                 IconButton(onClick = onGenerateSummary) {
-                    Icon(Icons.AutoMirrored.Filled.Assignment, contentDescription = "Generar resumen")
+                    Icon(Icons.Default.Assignment, contentDescription = "Generar resumen")
                 }
             }
             
@@ -536,8 +536,8 @@ fun FileItem(
         Icon(
             imageVector = when {
                 file.name.startsWith("transcript_") -> Icons.Default.Description
-                file.name.startsWith("summary_") -> Icons.AutoMirrored.Filled.Assignment
-                else -> Icons.AutoMirrored.Filled.InsertDriveFile
+                file.name.startsWith("summary_") -> Icons.Default.Assignment
+                else -> Icons.Default.InsertDriveFile
             },
             contentDescription = null,
             modifier = Modifier.size(20.dp)
